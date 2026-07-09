@@ -1,10 +1,11 @@
 import java.util.Scanner;
 
-public class rry {
-    public static void enteredMarks(int[] marks){
+public class grades_management_system {
+    public static void displayMarks(int[] marks){
         System.out.println("Entered marks:");
         for (int i = 0; i < marks.length; i++) {
             System.out.print(marks[i] + " ");
+            System.out.println();
         }
     }
     public static int totalMarks(int[] marks){
@@ -15,12 +16,8 @@ public class rry {
         return sum;
     }
     public static double avgValue(int[] marks){
-        int sum = 0;
-        int n=marks.length;
-        for(int i = 0; i <n; i++){
-            sum += marks[i];
-        }
-        double avg=(double) sum/n;
+        int sum=totalMarks(marks);
+        double avg=(double) sum/marks.length;
         return avg;
     }
     public static int maxValue(int[] marks){
@@ -43,17 +40,15 @@ public class rry {
         }
         return min;
     }
-    public static int targetno(int[] marks){
+    public static int searchno(int[] marks){
         Scanner sc=new Scanner(System.in);
         int target=sc.nextInt();
-        int count=0;
         for(int i=0;i<marks.length;i++){
             if(marks[i]==target){
-                count++;
-                break;
+                return i;
             }
         }
-        return count;
+        return -1;
     }
 
     public static int[] passFailcount(int[] marks){
@@ -69,14 +64,18 @@ public class rry {
         return new int[]{pcount,fcount};
     }
 
-    public  static int[] updateno(int[] marks){
+    public  static int[] updateMarks(int[] marks){
         Scanner sc=new Scanner(System.in);
         System.out.println("Enter student number:");
         int n=sc.nextInt();
         System.out.println("Enter new marks:");
         int m=sc.nextInt();
-        for(int i=0;i<n;i++){
+        if(n>=1 && n<=marks.length){
             marks[n-1]=m;
+            System.out.println("Marks Updated Successfully.");
+        }
+        else{
+            System.out.println("Invalid Student Number");
         }
         return marks;
     }
@@ -90,11 +89,11 @@ public class rry {
         for(int i=0;i<marks.length;i++){
             if(marks[i]>=85){
                 acount++;
-            } else if (marks[i]<=84 && marks[i]>=70) {
+            } else if (marks[i]>=70) {
                 bcount++;
-            } else if (marks[i]<=79 && marks[i]>=55) {
+            } else if (marks[i]>=55) {
                 ccount++;
-            } else if (marks[i]<=54 && marks[i]>=35) {
+            } else if (marks[i]>=35) {
                 dcount++;
             }else{
                 fcount++;
@@ -129,7 +128,7 @@ public class rry {
             int choice=sc.nextInt();
             switch (choice){
                 case 1:
-                    enteredMarks(marks);
+                    displayMarks(marks);
                     break;
                 case 2:
                 System.out.println("Total of the marks:" + totalMarks(marks));
@@ -145,7 +144,7 @@ public class rry {
                     break;
                 case 6:
                     System.out.println("Enter the marks you want to search:");
-                    int result=targetno(marks);
+                    int result=searchno(marks);
                     if(result==-1){
                         System.out.println("Not Found");
                     }else{
@@ -153,9 +152,8 @@ public class rry {
                     }
                     break;
                 case 7:
-                    int[] m=updateno(marks);
-                    System.out.println("New Updated list:"+m);
-                    System.out.println("Marks Updated Successfully.");
+                    updateMarks(marks);
+                    displayMarks(marks);
                     break;
                 case 8:
                     int[] passfail=passFailcount(marks);
@@ -181,3 +179,4 @@ public class rry {
         }
     }
 }
+
